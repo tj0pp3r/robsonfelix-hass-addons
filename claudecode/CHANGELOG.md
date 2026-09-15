@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.65-hardened1] - 2026-09-15
+
+### Security
+- Removed `docker_api` and `full_access` from `config.yaml`. `docker_api` grants access to the host's Docker socket, which is equivalent to root on the host; neither is required for the add-on's terminal/MCP functionality
+- Removed `uart` (host serial device passthrough) — only needed for Modbus/serial hardware, which this fork does not use
+- Downgraded `hassio_role` from `manager` to `default`. `manager` was only exercised by the Playwright Browser auto-detect path, which this fork does not install
+- Trimmed `map` to `homeassistant_config:rw` and `addon_config:rw` only, dropping `ssl:ro`, `share:rw`, `media:rw`, and `backup:ro` so the container can no longer read TLS certificates or the full HA backup archive
+- `auto_update_claude` now defaults to `false`, so Claude Code CLI updates are installed manually instead of pulled automatically into a still-privileged container
+
 ## [1.2.65] - 2026-07-08
 
 ### Security
