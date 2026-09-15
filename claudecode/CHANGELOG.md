@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.65-hardened2] - 2026-09-15
+
+### Fixed
+- Startup printed two permission warnings: `Glob(/homeassistant/**)`/`Glob(/config/**)` and `Grep(...)` equivalents "are not matched by file permission checks — only Read(path) rules are." Removed the four invalid `Glob(...)`/`Grep(...)` entries from the pre-authorized `ALLOWED_TOOLS` list in the Dockerfile entrypoint; `Read(/homeassistant/**)` and `Read(/config/**)` already cover those tools per Claude Code's own permission model, so nothing was actually lost
+- Dropped `Read(/share/**)` and `Read(/media/**)` from the same list — those mounts were already removed from `config.yaml` in `1.2.65-hardened1`, so pre-authorizing them was dead configuration
+
 ## [1.2.65-hardened1] - 2026-09-15
 
 ### Security
